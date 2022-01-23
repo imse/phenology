@@ -20,15 +20,16 @@ import snappy_func as dp
 ##
 from pathlib import Path
 from glob import glob
-
+import rioxarray
 #from utils.cog import write_cog
 
 #import urllib.request
 # connect to the API
+"""
 from sentinelsat import SentinelAPI, read_geojson, geojson_to_wkt
 from datetime import date
-api = SentinelAPI('iserra', 'Creaf-21', 'https://scihub.copernicus.eu/dhus')
-import rioxarray
+api = SentinelAPI('', '', 'https://scihub.copernicus.eu/dhus')
+"""
 
 """
 fileBbox = sys.argv[1]   #geojosn file closed linestring
@@ -94,7 +95,8 @@ cropped_ds = ds.where(mask_lon & mask_lat, drop=True)
 
 
 #---
-download_unzipped_path = os.path.join(os.getcwd(), 'unzipped3')  #unzipped
+download_unzipped_path = os.path.join(os.getcwd(), 'data')
+#download_unzipped_path = os.path.join(os.getcwd(), 'unzipped3')  #unzipped
 listfiles =[]
 for item in os.listdir(download_unzipped_path):
     file_names = os.path.join(download_unzipped_path, item)
