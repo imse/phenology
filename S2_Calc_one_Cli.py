@@ -122,6 +122,23 @@ def sclbands(item):
             #products.append(str(path))
     return sorted(products) # ordered bands
 
+epsg = {'init': 'EPSG:4326'}
+def affine(b):
+    """Compute an affine coordinates reprojection using rasterio python package, given an EPSG init argument
+
+    Parameters:
+        b (str): full path to a S2 `.jp2` file
+
+    Return: longitude, latitude (numpy arrays)
+    """
+    # S2 bands share the same geometry
+    ds = xarray.open_rasterio(b).isel(band=0)
+    ra = rasterio.open(b,driver='JP2OpenJPEG')
+    # affine transformation to lat and lon
+    xt, yt = rasterio.warp.transform(src_crs=ra.crs, dst_crs=rasterio.crs.CRS(epsg), xs=ds.x,ys=ds.y)
+    lon, lat = np.array(xt), np.array(yt)
+    return lon,lat
+
 
 # connect to the API
 """
@@ -192,7 +209,15 @@ cropped_ds = ds.where(mask_lon & mask_lat, drop=True)
 
 """
 
+ARG=json.load(open("vlabparams.json","r"))
+print(str(ARG['bbox'][0]))
 
+xmin =  str(ARG['bbox'][0])
+ymin =  str(ARG['bbox'][1])
+xmax = str(ARG['bbox'][3])
+ymax =  str(ARG['bbox'][4])
+
+print(xmin,ymin,xmax,ymax)
 #---
 download_unzipped_path = os.path.join(os.getcwd(), 'unzipped')
 #download_unzipped_path = os.path.join(os.getcwd(), 'data')
