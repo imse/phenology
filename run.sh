@@ -9,13 +9,13 @@ else
 fi
 
 #unzip data/img.zip
-unzip data/img.zip -d data
+unzip data/img.zip -d unzipped
 #unzip data/img.zip -d /unzipped
 #unzip data/s2.zip -d /tmp/unzipped
 
 #$(ls -d /data/*.SAFE)
-ls -d data/*.SAFE
-ls -l data/*.SAFE
+ls -d unzipped/*.SAFE
+ls -l unzipped/*.SAFE
 #ls -l data/sat_product
 #ls -d data/sat_product
 
