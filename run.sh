@@ -1,15 +1,16 @@
 #!/bin/bash
 
 #debug linesls -l
-if [ -e data/img ]
+if [ -e data/img.zip ]
 then
 	echo -e "File data/img exists"
 else
 	echo -e "File  doesnt exists"
 fi
 
-unzip data/img.zip -d /data
+unzip data/img.zip -d /data/unzipped
 #$(ls -d /data/*.SAFE)
+ls -d /data/unzipped
 #ls -l data/sat_product
 #ls -d data/sat_product
 
