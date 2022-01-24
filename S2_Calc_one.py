@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 import os, sys
-#sys.path.append(os.path.join(os.path.expanduser("~"),"CLEOPE/Trials/modules"))
 #import qm
-#import data_processing_S2_affine as dp
 import rasterio
 import rasterio.plot
 
@@ -13,9 +11,12 @@ import pandas as pd
 import rioxarray
 import numpy as np
 
-#import data_S2 as dp2
+##
+from pathlib import Path
+from glob import glob
+
+
 import snappy_func as dp
-#files = dp2.queryS2('product_list_2019.txt')
 
 ##
 from pathlib import Path
@@ -23,7 +24,105 @@ from glob import glob
 import rioxarray
 #from utils.cog import write_cog
 
-#import urllib.request
+
+def paths_to_datetimeindex(paths):
+    string_slice=(45,-5) #string_slice=(45,60)
+    date_strings = [os.path.basename(i)[slice(*string_slice)]
+                    for i in paths]
+    return pd.to_datetime(date_strings)
+
+
+def unzip(zipped_filename):
+    with zipfile.ZipFile(zipped_filename, 'r') as zip_ref:
+        if not os.path.exists('unzipped'):
+            os.makedirs('unzipped')
+        zip_ref.extractall('./unzipped')
+
+if not os.path.exists('unzipped'):
+    os.makedirs('unzipped')
+
+
+def queryS2(file):
+    """Read an input product list returning the full-path product list suitable for reading datasets.
+
+    Parameters:
+        file (str): full-path of the input file listing target products
+
+    Return: S5P L2 full-path to files (list)
+    """
+    with open(file,"r") as f:
+        data = f.readlines()
+        list = [d.split("\n")[0] for d in data]
+    products = []
+    for item in list:
+        if item.endswith('.zip') or item.endswith('.SAFE') :
+            products.append(item)
+        else:
+            for file in Path(item).rglob('*.zip') or Path(item).rglob('*.SAFE') :
+                products.append(str(file))
+    return products
+
+
+def product_level(item):
+    """Check for S2 product type. This information will change the relative path to images.
+
+    Parameters:
+        item (str): full path to S2 products location
+
+    Return: exit status (bool)
+    Raise ValueError for Unrecognized product types
+    """
+    if "MSIL2A" in item:
+        return True
+    elif "MSIL1C" in item:
+        return False
+    else:
+        raise ValueError("%s: Unrecognized S2 product type"%item)
+
+
+
+def bands(item,res='10m'):
+    """Search for target MSIL2A bands given an input resolution. This is useful for index computations.
+
+    Parameters:
+        item (str): full path to S2 products location
+        res (str): resolution of S2 images; default set to `10m`; allowed options: `10m`,`20m`,`60m`
+
+    Return: bands sorted by increasing wavelength (list)
+    """
+    msi = product_level(item)
+    products = []
+    string = '*_'+str(res)+'.jp2'
+    if msi: # L2A
+        for path in Path(item).rglob(string):
+            products.append(str(path))
+    else: # L1C
+        for path in Path(item).rglob('*.jp2'):
+            products.append(str(path))
+    return sorted(products) # ordered bands
+
+
+def sclbands(item):
+    """Search for target MSIL2A bands given an input resolution. This is useful for index computations.
+
+    Parameters:
+        item (str): full path to S2 products location
+        res (str): resolution of S2 images; default set to `10m`; allowed options: `10m`,`20m`,`60m`
+
+    Return: bands sorted by increasing wavelength (list)
+    """
+    msi = product_level(item)
+    products = []
+    #string = '*_'+str(res)+'.jp2'
+    if msi: # L2A
+        for path in Path(item).rglob('*_SCL_*'):
+            products.append(str(path))
+    #else: # L1C
+        #for path in Path(item).rglob('*.jp2'):
+            #products.append(str(path))
+    return sorted(products) # ordered bands
+
+
 # connect to the API
 """
 from sentinelsat import SentinelAPI, read_geojson, geojson_to_wkt
@@ -107,18 +206,18 @@ files = os.listdir(download_unzipped_path)
 print(files)
 
 
-time_var = xr.Variable('time', dp.paths_to_datetimeindex(files))
+time_var = xr.Variable('time', paths_to_datetimeindex(files))
 print(time_var)
 
-red =[dp.bands(file,res='10m')[3]  for file in listfiles]
+red =[bands(file,res='10m')[3]  for file in listfiles]
 #print(red)
-nir = [dp.bands(file,res='10m')[4]  for file in listfiles]
+nir = [bands(file,res='10m')[4]  for file in listfiles]
 #print(nir)
 
 redlist = red
 nirlist = nir
 
-#time_var = xr.Variable('time', dp.paths_to_datetimeindex(redlist))
+#time_var = xr.Variable('time', paths_to_datetimeindex(redlist))
 #print(time_var)
 
 window10= rasterio.windows.Window(0,0, 1080,1080)
@@ -145,7 +244,7 @@ print(red_ds)
 
 scl = []
 for file in listfiles:
-    scl_list = dp.sclbands(file)[0]     #dp2.sclbands(file)[0]  dp.sclbands(file)[1]
+    scl_list = sclbands(file)[0]     #dp2.sclbands(file)[0]  sclbands(file)[1]
     print(scl_list)
     scl.append(scl_list)
 
