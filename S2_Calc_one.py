@@ -194,7 +194,7 @@ cropped_ds = ds.where(mask_lon & mask_lat, drop=True)
 
 
 #---
-download_unzipped_path = os.path.join(os.getcwd(), 'data/sat_product')
+download_unzipped_path = os.path.join(os.getcwd(), 'data')
 #download_unzipped_path = os.path.join(os.getcwd(), 'unzipped3')  #unzipped
 listfiles =[]
 for item in os.listdir(download_unzipped_path):
