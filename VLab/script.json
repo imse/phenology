@@ -9,6 +9,11 @@
    "repoPath": "S2_Calc_one.py",
    "targetPath": "S2_Calc_one.py",
    "pathType": "FILE"
+ },
+ {
+   "repoPath": "snappy_func.py",
+   "targetPath": "snappy_func.py",
+   "pathType": "FILE"
  }
   ]
 }
