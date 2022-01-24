@@ -16,7 +16,7 @@ from pathlib import Path
 from glob import glob
 
 
-import snappy_func as dp
+#import snappy_func as dp
 
 ##
 from pathlib import Path
@@ -60,7 +60,7 @@ def queryS2(file):
         else:
             for file in Path(item).rglob('*.zip') or Path(item).rglob('*.SAFE') :
                 products.append(str(file))
-    return products 
+    return products
 
 
 def product_level(item):
