@@ -60,7 +60,7 @@ def queryS2(file):
         else:
             for file in Path(item).rglob('*.zip') or Path(item).rglob('*.SAFE') :
                 products.append(str(file))
-    return products
+    return products 
 
 
 def product_level(item):
