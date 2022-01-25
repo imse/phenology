@@ -23,7 +23,7 @@ else
   var="$(grep -oP "(?<=<PRODUCT_URI>)[^<]+" data/sat_product/MTD_*.xml)"
   echo "$var"
 
-  mv data/sat_product unzipped/$var
+  mv data/sat_product data/$var
   #mv $var unzipped
 
 fi
