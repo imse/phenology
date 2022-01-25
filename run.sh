@@ -24,7 +24,7 @@ else
   echo "$var"
 
 	mv data/sat_product data/$var
-  mv data/$var unzipped/$var
+  mv data/$var unzipped
 
 fi
 
