@@ -5,7 +5,7 @@ less vlabparams.json
 #debug linesls -l
 if [ -e data/img.zip ]
 then
-	echo -e "File data/img exists"
+  echo -e "File data/img exists"
   unzip data/img.zip -d unzipped
   #unzip data/img.zip -d /unzipped
   #unzip data/s2.zip -d /tmp/unzipped
@@ -23,8 +23,8 @@ else
   var="$(grep -oP "(?<=<PRODUCT_URI>)[^<]+" data/sat_product/MTD_*.xml)"
   echo "$var"
 
-	mv data/sat_product data/$var
-	mv data/$var /unzipped
+  mv data/sat_product data/$var
+  mv data/$var /unzipped
 
 fi
 
