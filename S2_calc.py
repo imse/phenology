@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import os, sys
+import json
 #import qm
 import rasterio
 import rasterio.plot
