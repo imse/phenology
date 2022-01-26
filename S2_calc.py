@@ -218,8 +218,8 @@ print(str(ARG['bbox'].split(",")))
 
 bbox_s=str(ARG['bbox'].split(","))
 
-xmin =  bbox_s[0])
-ymin =  bbox_s[1])
+xmin =  str(bbox_s[0])
+ymin =  str(bbox_s[1])
 xmax = str(ARG['bbox'][2])
 ymax =  str(ARG['bbox'][3])
 
