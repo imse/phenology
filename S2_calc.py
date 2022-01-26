@@ -114,7 +114,7 @@ def sclbands(item):
     """
     msi = product_level(item)
     products = []
-    #string = '*_'+str(res)+'.jp2' 
+    #string = '*_'+str(res)+'.jp2'
     if msi: # L2A
         for path in Path(item).rglob('*_SCL_*'):
             products.append(str(path))
@@ -220,8 +220,8 @@ bbox_s=str(ARG['bbox'].split(","))
 
 xmin =  str(bbox_s[0])
 ymin =  str(bbox_s[1])
-xmax = str(ARG['bbox'][2])
-ymax =  str(ARG['bbox'][3])
+xmax = str(bbox_s[2])
+ymax =  str(bbox_s[3])
 
 print(str(ARG['bbox']))
 
