@@ -210,15 +210,23 @@ cropped_ds = ds.where(mask_lon & mask_lat, drop=True)
 
 """
 
+#def phen:
+
 ARG=json.load(open("vlabparams.json","r"))
-print(str(ARG['bbox'][0]))
+print(str(ARG['bbox'][0])) #1
+print(str(ARG['bbox'].split(",")))
 
-xmin =  str(ARG['bbox'][0])
-ymin =  str(ARG['bbox'][1])
-xmax = str(ARG['bbox'][3])
-ymax =  str(ARG['bbox'][4])
+bbox_s=str(ARG['bbox'].split(","))
 
-print(xmin,ymin,xmax,ymax)
+xmin =  bbox_s[0])
+ymin =  bbox_s[1])
+xmax = str(ARG['bbox'][2])
+ymax =  str(ARG['bbox'][3])
+
+print(str(ARG['bbox']))
+
+print(xmin,ymin,xmax,ymax) #1 9 1 0
+#19.103132247924805, 64.041618347167969, 19.898113250732422,64.403816223144531
 #---
 #download_unzipped_path = os.path.join(os.getcwd(), 'unzipped')
 download_unzipped_path = os.path.join(os.getcwd(), 'data')
@@ -343,3 +351,6 @@ with open(output, "w") as outputfile:
     #outputfile.write(  + '\n')
     #outputfile.write(  + '\n')
     #outputfile.write(  + '\n')
+
+
+#if __name__ == "__main__":
