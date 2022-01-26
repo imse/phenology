@@ -218,11 +218,11 @@ print(str(ARG['bbox'][0])) #1
 print(str(ARG['bbox'].split(","))) #['19.1031', ' 64.0410', ' 19.8981', '64.4038']
 
 print(str(ARG['bbox'])) #19.1031, 64.0410, 19.8981,64.4038
-xmin=str(ARG['bbox']).split(",")[0])
-ymin=str(ARG['bbox']).split(",")[1])
+xmin=ARG['bbox'].split(",")[0]
+ymin=ARG['bbox'].split(",")[1]
 
 
-print(xmin)
+print(str(xmin))
 print(ymin)
 
 #txt = '19.1031, 64.0410, 19.8981, 64.4038'
