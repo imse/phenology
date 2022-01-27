@@ -219,10 +219,11 @@ red_da_gran = xr.concat([xr.open_rasterio(i,chunks={'x':512, 'y':512}) for i in 
 #red_da_gran = xr.concat([xr.open_rasterio(i) for i in redlist],
                         dim=time_var)
 
-#mask_lon = (red_da_gran.x >= x_max) & (red_da_gran.x <= x_min)
-#mask_lat = (red_da_gran.y >= y_max) & (red_da_gran.y <= y_min)
-#red_da = red_da_gran.where(mask_lon & mask_lat, drop=True)
+mask_lon = (red_da_gran.x >= x_max) & (red_da_gran.x <= x_min)
+mask_lat = (red_da_gran.y >= y_max) & (red_da_gran.y <= y_min)
+red_da = red_da_gran.where(mask_lon & mask_lat, drop=True)
 
+red_ds = red_da.to_dataset('band')
 #red_ds = red_da_gran.rio.isel_window(window10).to_dataset('band')
 red_ds = red_ds.rename({1: 'red'})#[:,:,0:500,0:500]
 red_ds = red_ds.astype('int16')
@@ -246,6 +247,7 @@ scl_ds_int= scl_ds_int.astype('int16')
 #print(scl_ds_int)
 
 ds=xr.merge([nir_ds,red_ds,scl_ds_int])
+ds =ds.astype('int16')
 print('ds')
 print(ds.info())
 
