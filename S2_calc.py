@@ -152,7 +152,7 @@ print(str(ARG['bbox'])) #19.1031, 64.0410, 19.8981,64.4038
 lon_min=ARG['bbox'].split(",")[0]
 lat_min=ARG['bbox'].split(",")[1]
 lon_max=ARG['bbox'].split(",")[2]
-lat_man=ARG['bbox'].split(",")[3]
+lat_max=ARG['bbox'].split(",")[3]
 
 
 print(str(lon_min))
