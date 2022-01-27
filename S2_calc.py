@@ -250,11 +250,12 @@ scl_ds = scl_da.to_dataset('band')
 scl_ds = scl_ds.rename({1:'scl'})
 print(scl_ds)
 
-scl_ds_int = scl_ds.interp(y=red_ds["y"], x=red_ds["x"])
-scl_ds_int= scl_ds_int.astype('int16')
+#scl_ds_int = scl_ds.interp(y=red_ds["y"], x=red_ds["x"])
+#scl_ds_int= scl_ds_int.astype('int16')
 #print(scl_ds_int)
 
-ds=xr.merge([nir_ds,red_ds,scl_ds_int])
+#ds=xr.merge([nir_ds,red_ds,scl_ds_int])
+ds=xr.merge([nir_ds,red_ds,scl_ds])
 ds =ds.astype('int16')
 print('ds')
 print(ds.info())
@@ -315,6 +316,5 @@ with open(output, "w") as outputfile:
     #outputfile.write(  + '\n')
     #outputfile.write(  + '\n')
     #outputfile.write(  + '\n')
-
 
 #if __name__ == "__main__":
