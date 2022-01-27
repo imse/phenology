@@ -151,13 +151,13 @@ print(str(ARG['bbox'].split(","))) #['19.1031', ' 64.0410', ' 19.8981', '64.4038
 print(str(ARG['bbox'])) #19.1031, 64.0410, 19.8981,64.4038
 lon_min=ARG['bbox'].split(",")[0]
 lat_min=ARG['bbox'].split(",")[1]
-lon_man=ARG['bbox'].split(",")[2]
+lon_max=ARG['bbox'].split(",")[2]
 lat_man=ARG['bbox'].split(",")[3]
 
 
 print(str(lon_min))
 print(lat_min)
-print(lon_man)
+print(lon_max)
 
 proj_wgs84 = pyproj.Proj(init="epsg:4326")
 proj_gk4 = pyproj.Proj(init="epsg:32632")   #EPSG:32632
