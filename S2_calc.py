@@ -238,7 +238,15 @@ for file in listfiles:
 
 scl_da_gran = xr.concat([xr.open_rasterio(i) for i in scl],  #chunks={'x':512, 'y':512}
                         dim=time_var)
-scl_ds = scl_da_gran.rio.isel_window(window60).to_dataset('band')
+
+mask_lon = (scl_da_gran.x >= x_max) & (scl_da_gran.x <= x_min)   #   429770.327 4666780.373
+mask_lat = (scl_da_gran.y >= y_max) & (scl_da_gran.y <= y_min)
+
+scl_da = scl_da_gran.where(mask_lon & mask_lat, drop=True)
+
+#scl_ds = scl_da_gran.rio.isel_window(window60).to_dataset('band')
+scl_ds = scl_da.to_dataset('band')
+
 scl_ds = scl_ds.rename({1:'scl'})
 print(scl_ds)
 
@@ -282,7 +290,7 @@ ndvi.rio.to_raster('ndvi_cl_output.tif', dtype="float32")
 
 
 # vPOS = Value at peak of season:
-ndvi_cl.max("time").values
+vPOS = ndvi_cl.max("time").values
 
 # POS = DOY of peak of season
 #dvi_cl.isel(time=ndvi_cl.argmax("time")).time.dt.dayofyear.values
